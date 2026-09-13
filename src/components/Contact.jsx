@@ -65,7 +65,7 @@ export default function Contact() {
           </div>
 
           {/* Contact Details Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto pt-8 border-t border-white/[0.08] text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto pt-8 border-t border-white/[0.08] text-left">
             
             {/* Email card with copy trigger */}
             <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
@@ -79,7 +79,7 @@ export default function Contact() {
                   </span>
                   <a
                     href={`mailto:${personalInfo.email}`}
-                    className="text-xs sm:text-sm font-mono font-medium text-white hover:text-purple-300 transition-colors"
+                    className="text-xs font-mono font-medium text-white hover:text-purple-300 transition-colors"
                   >
                     {personalInfo.email}
                   </a>
@@ -89,7 +89,7 @@ export default function Contact() {
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className="p-2 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-400 hover:text-white transition-colors"
+                className="p-1.5 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-slate-400 hover:text-white transition-colors"
                 title="Copy email address"
               >
                 {copiedEmail ? (
@@ -100,6 +100,24 @@ export default function Contact() {
               </button>
             </div>
 
+            {/* Phone card */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <Send className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
+                  Direct Contact
+                </span>
+                <a
+                  href={`tel:${personalInfo.phone}`}
+                  className="text-xs font-mono font-semibold text-white hover:text-emerald-300 transition-colors"
+                >
+                  {personalInfo.phone}
+                </a>
+              </div>
+            </div>
+
             {/* Location card */}
             <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
@@ -107,9 +125,9 @@ export default function Contact() {
               </div>
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
-                  Location
+                  Current Location
                 </span>
-                <span className="text-xs sm:text-sm font-semibold text-white">
+                <span className="text-xs font-semibold text-white">
                   {personalInfo.location}
                 </span>
               </div>
