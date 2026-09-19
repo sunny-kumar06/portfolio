@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { PortfolioProvider } from './context/PortfolioContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -12,17 +13,17 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ResumeModal from './components/ResumeModal';
 import CustomCursor from './components/CustomCursor';
+import AdminPortalModal from './components/admin/AdminPortalModal';
 import { Sparkles, Terminal } from 'lucide-react';
 
-export default function App() {
+function PortfolioContent() {
   const [resumeOpen, setResumeOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Elegant initial page load animation
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 700);
+    }, 600);
 
     return () => clearTimeout(timer);
   }, []);
@@ -72,6 +73,17 @@ export default function App() {
 
       {/* Recruiter Resume Viewer Modal */}
       <ResumeModal isOpen={resumeOpen} onClose={() => setResumeOpen(false)} />
+
+      {/* Admin Portal Modal */}
+      <AdminPortalModal />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <PortfolioProvider>
+      <PortfolioContent />
+    </PortfolioProvider>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { GraduationCap, School, BookOpen, Calendar, MapPin, Sparkles } from 'lucide-react';
-import { educationTimeline } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const iconMap = {
   GraduationCap,
@@ -9,6 +9,8 @@ const iconMap = {
 };
 
 export default function Education() {
+  const { educationTimeline } = usePortfolio();
+
   return (
     <section id="education" className="py-24 relative overflow-hidden bg-[#090a13]/70">
       {/* Background ambient lighting */}
@@ -26,7 +28,7 @@ export default function Education() {
             Education <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">Journey</span>
           </h2>
           <p className="mt-3 text-slate-400 text-sm sm:text-base">
-            Formal education fostering deep analytical and computer science fundamentals.
+            Formal education fostering deep analytical, problem-solving, and computer science fundamentals.
           </p>
         </div>
 
@@ -64,9 +66,9 @@ export default function Education() {
                         <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
                           {item.institution}
                         </h3>
-                        {isLatest && (
+                        {item.scoreBadge && (
                           <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                            Current Institution
+                            {item.scoreBadge}
                           </span>
                         )}
                       </div>

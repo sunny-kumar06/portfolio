@@ -1,8 +1,10 @@
 import React from 'react';
-import { Trophy, Award, Sparkles, Zap, Shield, Cpu, Activity, Star } from 'lucide-react';
-import { featuredAchievement } from '../data/portfolioData';
+import { Trophy, Award, Sparkles, Star } from 'lucide-react';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Achievement() {
+  const { featuredAchievement } = usePortfolio();
+
   return (
     <section id="achievements" className="py-24 relative overflow-hidden bg-grid-pattern">
       {/* Background Radial Glow */}
@@ -20,7 +22,7 @@ export default function Achievement() {
             Featured <span className="bg-gradient-to-r from-amber-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent">Achievement</span>
           </h2>
           <p className="mt-3 text-slate-400 text-sm sm:text-base">
-            Recognized for technical excellence, real-time IoT architecture, and rapid prototyping under high-intensity competition.
+            Recognized for technical excellence, real-time architecture, and rapid prototyping under high-intensity competition.
           </p>
         </div>
 
@@ -52,7 +54,7 @@ export default function Achievement() {
                         <Sparkles className="w-5 h-5 text-amber-200 absolute -top-1 -right-1 animate-pulse" />
                       </div>
                       <span className="text-[11px] font-mono uppercase tracking-widest text-amber-300/90 font-semibold">
-                        Joy University
+                        {featuredAchievement.organizer || 'Joy University'}
                       </span>
                     </div>
                   </div>
@@ -92,7 +94,7 @@ export default function Achievement() {
                     Demonstrated Competencies:
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {featuredAchievement.tags.map((tag, idx) => (
+                    {(featuredAchievement.tags || []).map((tag, idx) => (
                       <span
                         key={idx}
                         className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-amber-500/10 border border-amber-500/25 text-amber-200 hover:bg-amber-500/20 transition-colors shadow-sm"

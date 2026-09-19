@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FolderGit2, Sparkles, Filter } from 'lucide-react';
-import { projects } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 import ProjectCard from './ProjectCard';
 
 const filterCategories = [
@@ -11,6 +11,7 @@ const filterCategories = [
 ];
 
 export default function Projects() {
+  const { projects } = usePortfolio();
   const [selectedFilter, setSelectedFilter] = useState('ALL');
 
   const filteredProjects =
@@ -38,13 +39,14 @@ export default function Projects() {
           </h2>
 
           <p className="mt-3 text-slate-400 text-sm sm:text-base">
-            Real-world projects where I explored frontend development, backend systems, APIs and database integration.
+            Real-world projects where I explored full-stack web development, Gemini AI integrations, backend systems, APIs and database architecture.
           </p>
 
           {/* Filter Pills */}
           <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
             {filterCategories.map((tab) => {
               const isSelected = selectedFilter === tab.id;
+              const count = tab.id === 'ALL' ? projects.length : projects.filter(p => p.category === tab.id).length;
               return (
                 <button
                   key={tab.id}
@@ -58,7 +60,7 @@ export default function Projects() {
                 >
                   {tab.label}
                   <span className="ml-2 text-[10px] font-mono opacity-75">
-                    ({tab.id === 'ALL' ? projects.length : projects.filter(p => p.category === tab.id).length})
+                    ({count})
                   </span>
                 </button>
               );

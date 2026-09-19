@@ -18,7 +18,7 @@ import {
   CheckCircle,
   Layers
 } from 'lucide-react';
-import { skillCategories } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const iconComponents = {
   Code2,
@@ -35,10 +35,12 @@ const iconComponents = {
   CloudUpload,
   Cloud,
   Workflow,
-  Sparkles
+  Sparkles,
+  Layers
 };
 
 export default function Skills() {
+  const { skillCategories } = usePortfolio();
   const [activeTab, setActiveTab] = useState('all');
 
   const filteredCategories =
@@ -64,7 +66,7 @@ export default function Skills() {
             Technical <span className="bg-gradient-to-r from-purple-400 to-cyan-300 bg-clip-text text-transparent">Skills</span>
           </h2>
           <p className="mt-3 text-slate-400 text-sm sm:text-base">
-            Modern technologies and engineering fundamentals I utilize to build responsive, robust web solutions.
+            Modern technologies, frameworks, and engineering fundamentals I utilize to build responsive, robust web solutions.
           </p>
 
           {/* Category Filter Pills */}

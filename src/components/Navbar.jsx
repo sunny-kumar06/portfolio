@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, FileText, Sparkles, Terminal } from 'lucide-react';
+import { Menu, X, FileText, Settings, Shield, Sparkles, Terminal } from 'lucide-react';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -13,6 +14,7 @@ const navItems = [
 ];
 
 export default function Navbar({ onOpenResume }) {
+  const { personalInfo, setIsAdminOpen } = usePortfolio();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -34,9 +36,22 @@ export default function Navbar({ onOpenResume }) {
       }
     };
 
+    // Global keyboard shortcut to open Admin Portal (Ctrl + Shift + A or Cmd + Shift + A)
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setIsAdminOpen(true);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [setIsAdminOpen]);
 
   const handleNavClick = (href) => {
     setMobileMenuOpen(false);
@@ -71,7 +86,7 @@ export default function Navbar({ onOpenResume }) {
             </div>
             <div className="flex flex-col">
               <span className="font-bold tracking-tight text-white group-hover:text-purple-300 transition-colors text-base sm:text-lg flex items-center gap-1.5">
-                Sunny Kumar
+                {personalInfo.name || 'Sunny Kumar'}
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
               </span>
               <span className="text-[10px] font-mono tracking-widest text-slate-400 uppercase hidden sm:block">
@@ -105,7 +120,19 @@ export default function Navbar({ onOpenResume }) {
           </nav>
 
           {/* Action CTA & Mobile Toggle */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
+            {/* Admin Portal Button */}
+            <button
+              type="button"
+              onClick={() => setIsAdminOpen(true)}
+              className="p-2 rounded-xl text-slate-400 hover:text-purple-300 hover:bg-white/[0.06] border border-white/[0.08] transition-all"
+              title="Open Admin Portal (Ctrl + Shift + A)"
+              aria-label="Admin Portal"
+            >
+              <Settings className="w-4 h-4" />
+            </button>
+
+            {/* Resume Button */}
             <button
               type="button"
               onClick={onOpenResume}
@@ -136,7 +163,7 @@ export default function Navbar({ onOpenResume }) {
       <div
         className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out border-b border-white/[0.08] ${
           mobileMenuOpen
-            ? 'max-h-[500px] bg-[#090a12]/95 backdrop-blur-2xl opacity-100 py-4 px-6'
+            ? 'max-h-[550px] bg-[#090a12]/95 backdrop-blur-2xl opacity-100 py-4 px-6'
             : 'max-h-0 bg-transparent opacity-0 py-0 px-6 pointer-events-none'
         }`}
       >
@@ -165,17 +192,29 @@ export default function Navbar({ onOpenResume }) {
             );
           })}
 
-          <div className="pt-3 mt-2 border-t border-white/[0.08]">
+          <div className="pt-3 mt-2 border-t border-white/[0.08] space-y-2">
             <button
               type="button"
               onClick={() => {
                 setMobileMenuOpen(false);
                 onOpenResume();
               }}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-lg shadow-purple-600/20"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl shadow-lg shadow-purple-600/20"
             >
               <FileText className="w-4 h-4" />
               View & Download Resume
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsAdminOpen(true);
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2 text-xs font-mono text-slate-300 bg-white/[0.04] rounded-xl border border-white/[0.08]"
+            >
+              <Settings className="w-4 h-4 text-purple-400" />
+              Admin Portal Access
             </button>
           </div>
         </div>

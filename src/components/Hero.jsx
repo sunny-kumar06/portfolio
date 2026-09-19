@@ -1,9 +1,12 @@
+import React from 'react';
 import { ArrowRight, Download, Mail, ExternalLink, Sparkles, Terminal, Code2, ShieldCheck } from 'lucide-react';
 import LinkedinIcon from './LinkedinIcon';
-import { personalInfo } from '../data/portfolioData';
 import HeroTerminal from './HeroTerminal';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Hero({ onOpenResume }) {
+  const { personalInfo, activeResumeUrl } = usePortfolio();
+
   const scrollToProjects = () => {
     const el = document.getElementById('projects');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -40,7 +43,7 @@ export default function Hero({ onOpenResume }) {
             <div className="space-y-2 mb-4">
               <span className="text-base sm:text-lg font-mono text-cyan-400 font-medium tracking-wide flex items-center gap-2">
                 <span>👋</span>
-                Hi, I'm Sunny Kumar
+                Hi, I'm {personalInfo.name}
               </span>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
                 Pre-Final Year{' '}
@@ -77,7 +80,7 @@ export default function Hero({ onOpenResume }) {
               </button>
 
               <a
-                href={personalInfo.resumeUrl}
+                href={activeResumeUrl}
                 download="Sunny_Kumar_Resume.pdf"
                 className="group inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl font-semibold text-sm text-slate-200 bg-white/[0.04] hover:bg-white/[0.09] border border-white/[0.12] hover:border-purple-500/40 backdrop-blur-md transition-all duration-300 hover:scale-[1.02] shadow-sm"
               >

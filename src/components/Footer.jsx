@@ -1,9 +1,11 @@
 import React from 'react';
-import { Mail, ArrowUp, Heart, Sparkles } from 'lucide-react';
+import { Mail, ArrowUp, Heart, Sparkles, Settings } from 'lucide-react';
 import LinkedinIcon from './LinkedinIcon';
-import { personalInfo } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Footer() {
+  const { personalInfo, setIsAdminOpen } = usePortfolio();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -24,7 +26,7 @@ export default function Footer() {
                 </div>
               </div>
               <span className="text-lg font-extrabold text-white tracking-tight">
-                Sunny Kumar
+                {personalInfo.name || 'Sunny Kumar'}
               </span>
             </div>
 
@@ -35,6 +37,15 @@ export default function Footer() {
 
           {/* Right Action Links */}
           <div className="flex items-center gap-4">
+            <button
+              type="button"
+              onClick={() => setIsAdminOpen(true)}
+              className="p-2.5 rounded-xl bg-white/[0.03] hover:bg-purple-500/10 border border-white/[0.08] hover:border-purple-500/30 text-slate-400 hover:text-purple-300 transition-all"
+              title="Admin Portal Access (Ctrl + Shift + A)"
+            >
+              <Settings className="w-4 h-4" />
+            </button>
+
             <a
               href={personalInfo.linkedin}
               target="_blank"
@@ -68,10 +79,10 @@ export default function Footer() {
         {/* Bottom copyright line */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400 text-center sm:text-left">
           <span>
-            © {new Date().getFullYear()} Sunny Kumar. All rights reserved.
+            © {new Date().getFullYear()} {personalInfo.name || 'Sunny Kumar'}. All rights reserved.
           </span>
           <span className="flex items-center gap-1 text-slate-400">
-            Crafted with modern React, Vite & Tailwind CSS
+            Crafted with React, Vite & AI pair-programming
           </span>
         </div>
 

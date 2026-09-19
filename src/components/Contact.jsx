@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Mail, MapPin, Copy, Check, Send, Sparkles, ExternalLink, ArrowRight } from 'lucide-react';
 import LinkedinIcon from './LinkedinIcon';
-import { personalInfo } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 export default function Contact() {
+  const { personalInfo } = usePortfolio();
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = () => {
@@ -25,7 +26,7 @@ export default function Contact() {
           {/* Status Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-mono mb-6">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Open to Web Development & SDE Internships</span>
+            <span>{personalInfo.statusBadge || 'Open to Web Development & SDE Internships'}</span>
           </div>
 
           {/* Heading */}
@@ -125,7 +126,7 @@ export default function Contact() {
               </div>
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
-                  Current Location
+                  Location
                 </span>
                 <span className="text-xs font-semibold text-white">
                   {personalInfo.location}

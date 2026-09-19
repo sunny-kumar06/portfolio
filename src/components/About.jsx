@@ -11,7 +11,7 @@ import {
   MapPin,
   Calendar
 } from 'lucide-react';
-import { personalInfo, aboutHighlights } from '../data/portfolioData';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const iconMap = {
   GraduationCap,
@@ -23,6 +23,8 @@ const iconMap = {
 };
 
 export default function About() {
+  const { personalInfo, aboutHighlights } = usePortfolio();
+
   return (
     <section id="about" className="py-24 relative overflow-hidden bg-[#090a12]/60">
       {/* Decorative Blur Spots */}
@@ -51,7 +53,7 @@ export default function About() {
           <div className="lg:col-span-6 space-y-5">
             <div className="p-8 rounded-2xl bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.08] backdrop-blur-xl shadow-xl">
               <div className="space-y-4 text-slate-300 text-sm sm:text-[15px] leading-relaxed">
-                {personalInfo.aboutParagraphs.map((para, idx) => (
+                {(personalInfo.aboutParagraphs || []).map((para, idx) => (
                   <p key={idx} className="relative pl-4 border-l-2 border-purple-500/40">
                     {para}
                   </p>
@@ -65,8 +67,10 @@ export default function About() {
                     <GraduationCap className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[11px] text-slate-400 block font-mono">University</span>
-                    <span className="text-xs sm:text-sm font-semibold text-white">Joy University</span>
+                    <span className="text-[11px] text-slate-400 block font-mono">University Standing</span>
+                    <span className="text-xs sm:text-sm font-semibold text-white">
+                      Joy University (CGPA: {personalInfo.cgpa || '8.8'})
+                    </span>
                   </div>
                 </div>
 
@@ -76,7 +80,9 @@ export default function About() {
                   </div>
                   <div>
                     <span className="text-[11px] text-slate-400 block font-mono">Location</span>
-                    <span className="text-xs sm:text-sm font-semibold text-white">Gaya, Bihar, India</span>
+                    <span className="text-xs sm:text-sm font-semibold text-white">
+                      {personalInfo.location || 'Chennai, Tamil Nadu, India'}
+                    </span>
                   </div>
                 </div>
               </div>
